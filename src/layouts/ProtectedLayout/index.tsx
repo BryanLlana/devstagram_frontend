@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useUserStore } from "../../store/useUserStore";
-import { useGetUser } from "../../modules/auth/hooks/useGetUser";
 import { Navigate, Outlet } from "react-router-dom";
 import { AuthRoutes } from "../../modules/auth/routes";
+import { useGetUser } from "../../modules/auth/hooks/use-get-user";
 
 const ProtectedLayout = () => {
   const { user, setUser } = useUserStore();

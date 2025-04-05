@@ -1,7 +1,22 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { useUserStore } from "../../store/useUserStore";
+import { AuthRoutes } from "../../modules/auth/routes";
+import { theme } from "../../common/config/theme";
+import Button from "../../common/components/Button";
+import { CameraIcon } from "@heroicons/react/24/solid";
 
 export const AppLayout = () => {
+  const navigate = useNavigate();
   const yearCurrent = new Date().getFullYear();
+  const { user, setUser } = useUserStore();
+  const isAuthenticated =
+    user !== null && localStorage.getItem("auth_token") !== null;
+
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem("auth_token");
+    navigate(AuthRoutes.LOGIN);
+  };
 
   return (
     <>
@@ -9,12 +24,42 @@ export const AppLayout = () => {
         <div className="container mx-auto flex flex-col items-center gap-5 md:flex-row md:justify-between">
           <h1 className="text-3xl font-black">Devstagram</h1>
           <nav className="flex gap-5 items-center">
-            <Link className="text-gray-600" to="/auth/login">
-              Iniciar sesion
-            </Link>
-            <Link className="text-gray-600" to="/auth/register">
-              Crear cuenta
-            </Link>
+            {isAuthenticated ? (
+              <>
+                <div
+                  style={{
+                    backgroundColor: theme.color.PRIMARY[500],
+                    borderRadius: 10,
+                    padding: "5px 15px",
+                    color: "#fff",
+                    fontWeight: "bold",
+                  }}
+                >
+                  {user.name}
+                </div>
+                <Button variant="secondary-gray" size="M">
+                  Crear
+                  <CameraIcon className="text-black size-5" />
+                </Button>
+                <Button
+                  variant="ghost"
+                  color={theme.color.ALERT[800]}
+                  size="L"
+                  onClick={logout}
+                >
+                  Cerrar sesión
+                </Button>
+              </>
+            ) : (
+              <>
+                <Link className="text-gray-600" to="/auth/login">
+                  Iniciar sesión
+                </Link>
+                <Link className="text-gray-600" to="/auth/register">
+                  Crear cuenta
+                </Link>
+              </>
+            )}
           </nav>
         </div>
       </header>

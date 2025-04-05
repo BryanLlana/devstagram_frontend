@@ -17,6 +17,10 @@ axiosClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.data && error.response.data.message) {
+      if (error.response.data.message === "Unauthenticated.") {
+        toast.error("Token inválido");
+        window.location.href = "/auth/login";
+      }
       toast.error(error.response.data.message);
     } else {
       toast.error("Ocurrió un error inesperado");
