@@ -4,6 +4,8 @@ import { AuthRoutes } from "../../modules/auth/routes";
 import { theme } from "../../common/config/theme";
 import Button from "../../common/components/Button";
 import { CameraIcon } from "@heroicons/react/24/solid";
+import { PostRoutes } from "../../modules/posts/routes";
+import { WallRoutes } from "../../modules/app/routes";
 
 export const AppLayout = () => {
   const navigate = useNavigate();
@@ -33,11 +35,21 @@ export const AppLayout = () => {
                     padding: "5px 15px",
                     color: "#fff",
                     fontWeight: "bold",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    navigate(WallRoutes.createWallUsername(user.username));
                   }}
                 >
                   {user.name}
                 </div>
-                <Button variant="secondary-gray" size="M">
+                <Button
+                  variant="secondary-gray"
+                  size="M"
+                  onClick={() => {
+                    navigate(PostRoutes.create);
+                  }}
+                >
                   Crear
                   <CameraIcon className="text-black size-5" />
                 </Button>

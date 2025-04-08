@@ -6,6 +6,8 @@ import { AuthRoutes } from "../modules/auth/routes";
 import { WallRoutes } from "../modules/app/routes";
 import WallPage from "../modules/app/pages/wall";
 import ProtectedLayout from "../layouts/ProtectedLayout";
+import { PostRoutes } from "../modules/posts/routes";
+import CreateOrEditPostPage from "../modules/posts/pages/create-or-edit-post";
 
 export const AppRoutes = () => {
   return (
@@ -18,6 +20,10 @@ export const AppRoutes = () => {
 
           <Route element={<ProtectedLayout />}>
             <Route path={WallRoutes.INDEX} element={<WallPage />} />
+            <Route
+              path={PostRoutes.create}
+              element={<CreateOrEditPostPage />}
+            />
           </Route>
         </Route>
       </Routes>
